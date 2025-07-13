@@ -127,7 +127,7 @@ SIRH_BMKH/
 
 ## License
 
-Copyright © 2025 BMKH. All rights reserved.
+Copyright © 2025 SIRH. All rights reserved.
 
 ## Support
 
