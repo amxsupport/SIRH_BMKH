@@ -1,5 +1,4 @@
 <?php require_once 'views/layout.php'; ?>
-
 <!-- Main Content -->
 <main class="app-main">
     <div class="page-header">

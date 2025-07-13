@@ -1,6 +1,6 @@
 <?php require 'views/layout.php'; ?>
 
-<div class="container mt-4">
+<div class="container-fluid mt-4" style="max-width: 1400px;">
     <div class="row mb-3">
         <div class="col">
             <h2>User Management</h2>
@@ -20,7 +20,7 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped table-hover align-middle">
                     <thead>
                         <tr>
                             <th>Username</th>
@@ -45,9 +45,9 @@
                                     </span>
                                 </td>
                                 <td><?= $user['last_login'] ? date('Y-m-d H:i', strtotime($user['last_login'])) : 'Never' ?></td>
-                                <td>
+                                <td class="text-nowrap">
                                     <a href="index.php?controller=user&action=edit&id=<?= $user['user_id'] ?>" 
-                                       class="btn btn-sm btn-primary">Edit</a>
+                                       class="btn btn-sm btn-primary me-1">Edit</a>
                                     <a href="index.php?controller=user&action=toggleStatus&id=<?= $user['user_id'] ?>" 
                                        class="btn btn-sm btn-<?= $user['is_active'] ? 'warning' : 'success' ?>"
                                        onclick="return confirm('Are you sure you want to <?= $user['is_active'] ? 'deactivate' : 'activate' ?> this user?')">

@@ -6,9 +6,11 @@ class MYPDF extends TCPDF {
     public function Header() {
         // Add logo
         $logoPath = __DIR__ . '/../../assets/img/logo.png';
-        if(file_exists($logoPath)) {
+        if(file_exists($logoPath) && filesize($logoPath) > 0) {
             $this->Image($logoPath, 90, 10, 30);
             $this->Ln(35); // Add space after logo
+        } else {
+            $this->Ln(10); // Smaller space when no logo
         }
         
         $this->SetFont('dejavusans', 'B', 12);
