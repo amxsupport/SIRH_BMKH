@@ -1,0 +1,721 @@
+string(24) "DEBUG - Database config:"
+array(4) {
+  ["host"]=>
+  string(9) "localhost"
+  ["dbname"]=>
+  string(9) "sirh_bmkh"
+  ["username"]=>
+  string(4) "root"
+  ["password"]=>
+  string(0) ""
+}
+<pre style='position:fixed;top:0;right:0;background:white;z-index:9999;padding:10px;'>array(4) {
+  ["host"]=>
+  string(9) "localhost"
+  ["dbname"]=>
+  string(9) "sirh_bmkh"
+  ["username"]=>
+  string(4) "root"
+  ["password"]=>
+  string(0) ""
+}
+</pre><!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIRH - Direction Régionale de la Santé</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-brand">
+            <button type="button" class="nav-toggle">
+                <i class="bi bi-list"></i>
+            </button>
+            <a href="index.php" class="brand-logo">
+                <i class="bi bi-hospital"></i>
+                <span>SIRH</span>
+            </a>
+        </div>
+        <div class="nav-content">
+            <form class="search-form">
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="search" class="form-control" placeholder="Rechercher...">
+                </div>
+            </form>
+        </div>
+        <div class="nav-end">
+            <button class="theme-toggle" title="Changer le thème">
+                <i class="bi bi-moon-stars"></i>
+            </button>
+            <button class="btn-notification" data-count="0">
+                <i class="bi bi-bell"></i>
+            </button>
+            <button class="btn-fullscreen">
+                <i class="bi bi-arrows-fullscreen"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="app-sidebar">
+            <div class="sidebar-content">
+                <div class="organization-info">
+                    <h6 class="org-name">DRS Béni Mellal-Khénifra</h6>
+                    <p class="org-type">Direction Régionale de la Santé</p>
+                </div>
+
+                <div class="menu-section">
+                    <h6 class="menu-title">Menu Principal</h6>
+                    <ul class="menu-items">
+                        <li>
+                            <a href="index.php?action=index" class="active">
+                                <i class="bi bi-people"></i>
+                                <span>Employés</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.php?action=create" class="">
+                                <i class="bi bi-person-plus"></i>
+                                <span>Nouveau</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.php?action=statistics" class="">
+                                <i class="bi bi-graph-up"></i>
+                                <span>Statistiques</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.php?action=checkRetirements" class="">
+                                <i class="bi bi-bell"></i>
+                                <span>Notifications</span>
+                                                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="menu-section">
+                    <h6 class="menu-title">Rapports</h6>
+                    <ul class="menu-items">
+                        <li>
+                            <a href="#" onclick="exportToExcel(); return false;">
+                                <i class="bi bi-file-earmark-excel"></i>
+                                <span>Export Excel</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="app-version">
+                    <span>Version 1.0.0</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <div class="page-header">
+                                <div class="page-title">
+                    <h1>Tableau de bord</h1>
+                </div>
+
+                                <div class="page-actions">
+                    <button class="btn btn-secondary" onclick="exportToExcel()">
+                        <i class="bi bi-file-earmark-excel"></i>
+                        <span>Exporter</span>
+                    </button>
+                    <a href="index.php?action=create" class="btn btn-primary">
+                        <i class="bi bi-plus-lg"></i>
+                        <span>Nouveau</span>
+                    </a>
+                </div>
+                            </div>
+
+            <div class="page-content">
+                
+                
+                <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">Liste des Employés</h4>
+        <div>
+            <button class="btn btn-success" onclick="exportToExcel()">
+                <i class="bi bi-file-earmark-excel"></i> Exporter
+            </button>
+            <a href="index.php?action=create" class="btn btn-primary">
+                <i class="bi bi-person-plus"></i> Nouveau
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>PPR</th>
+                        <th>CIN</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Corps</th>
+                        <th>Établissement</th>
+                        <th>Province</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                                        <tr>
+                        <td>M123456</td>
+                        <td>QB123456</td>
+                        <td>Alami</td>
+                        <td>Mohammed</td>
+                        <td>Medical</td>
+                        <td>Hôpital Régional</td>
+                        <td>Béni Mellal</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=36" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=36" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(36, 'Alami Mohammed')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>A123460</td>
+                        <td>QB345682</td>
+                        <td>Alaoui</td>
+                        <td>Mehdi</td>
+                        <td>Administratif</td>
+                        <td>Direction Provinciale</td>
+                        <td>Azilal</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=50" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=50" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(50, 'Alaoui Mehdi')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>P123459</td>
+                        <td>QB234570</td>
+                        <td>Belhaj</td>
+                        <td>Hassan</td>
+                        <td>Paramedical</td>
+                        <td>Hôpital Provincial</td>
+                        <td>Khouribga</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=44" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=44" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(44, 'Belhaj Hassan')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>A123457</td>
+                        <td>QB345679</td>
+                        <td>Benjelloun</td>
+                        <td>Nadia</td>
+                        <td>Administratif</td>
+                        <td>Hôpital Provincial</td>
+                        <td>Khouribga</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=47" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=47" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(47, 'Benjelloun Nadia')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>M123457</td>
+                        <td>QB123457</td>
+                        <td>Bennani</td>
+                        <td>Fatima</td>
+                        <td>Medical</td>
+                        <td>Hôpital Provincial</td>
+                        <td>Khénifra</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=37" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=37" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(37, 'Bennani Fatima')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>A123458</td>
+                        <td>QB345680</td>
+                        <td>Chraibi</td>
+                        <td>Hassan</td>
+                        <td>Administratif</td>
+                        <td>Direction Régionale</td>
+                        <td>Béni Mellal</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=48" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=48" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(48, 'Chraibi Hassan')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>M123459</td>
+                        <td>QB123459</td>
+                        <td>El Amrani</td>
+                        <td>Leila</td>
+                        <td>Medical</td>
+                        <td>Hôpital Régional</td>
+                        <td>Béni Mellal</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=39" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=39" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(39, 'El Amrani Leila')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>A123456</td>
+                        <td>QB345678</td>
+                        <td>El Fassi</td>
+                        <td>Youssef</td>
+                        <td>Administratif</td>
+                        <td>Direction Provinciale</td>
+                        <td>Khénifra</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=46" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=46" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(46, 'El Fassi Youssef')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>A123461</td>
+                        <td>QB345683</td>
+                        <td>El Hamidi</td>
+                        <td>Zineb</td>
+                        <td>Administratif</td>
+                        <td>Hôpital Provincial</td>
+                        <td>Azilal</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=55" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=55" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(55, 'El Hamidi Zineb')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>M123462</td>
+                        <td>QB123462</td>
+                        <td>El Khoury</td>
+                        <td>Reda</td>
+                        <td>Medical</td>
+                        <td>Hôpital Provincial</td>
+                        <td>Khénifra</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=52" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=52" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(52, 'El Khoury Reda')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>M123460</td>
+                        <td>QB123460</td>
+                        <td>Fassi</td>
+                        <td>Karim</td>
+                        <td>Medical</td>
+                        <td>CS Azilal</td>
+                        <td>Azilal</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=40" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=40" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(40, 'Fassi Karim')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>P123458</td>
+                        <td>QB234569</td>
+                        <td>Idrissi</td>
+                        <td>Amina</td>
+                        <td>Paramedical</td>
+                        <td>Maternité Provinciale</td>
+                        <td>Béni Mellal</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=43" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=43" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(43, 'Idrissi Amina')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>P123462</td>
+                        <td>QB234573</td>
+                        <td>Lahlou</td>
+                        <td>Meryem</td>
+                        <td>Paramedical</td>
+                        <td>Maternité Provinciale</td>
+                        <td>Fquih Ben Salah</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=54" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=54" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(54, 'Lahlou Meryem')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>M123461</td>
+                        <td>QB123461</td>
+                        <td>Moussaoui</td>
+                        <td>Sara</td>
+                        <td>Medical</td>
+                        <td>Hôpital Régional</td>
+                        <td>Béni Mellal</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=51" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=51" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(51, 'Moussaoui Sara')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>P123457</td>
+                        <td>QB234568</td>
+                        <td>Ouazzani</td>
+                        <td>Karim</td>
+                        <td>Paramedical</td>
+                        <td>CS Azilal</td>
+                        <td>Azilal</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=42" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=42" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(42, 'Ouazzani Karim')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>P123456</td>
+                        <td>QB234567</td>
+                        <td>Rachidi</td>
+                        <td>Samira</td>
+                        <td>Paramedical</td>
+                        <td>Dispensaire Rural</td>
+                        <td>Fquih Ben Salah</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=41" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=41" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(41, 'Rachidi Samira')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>A123462</td>
+                        <td>QB345684</td>
+                        <td>Rami</td>
+                        <td>Omar</td>
+                        <td>Administratif</td>
+                        <td>Direction Régionale</td>
+                        <td>Béni Mellal</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=56" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=56" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(56, 'Rami Omar')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>A123459</td>
+                        <td>QB345681</td>
+                        <td>Saadi</td>
+                        <td>Amal</td>
+                        <td>Administratif</td>
+                        <td>CS Fquih Ben Salah</td>
+                        <td>Fquih Ben Salah</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=49" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=49" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(49, 'Saadi Amal')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>P123461</td>
+                        <td>QB234572</td>
+                        <td>Tahiri</td>
+                        <td>Younes</td>
+                        <td>Paramedical</td>
+                        <td>CS Rural Khouribga</td>
+                        <td>Khouribga</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=53" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=53" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(53, 'Tahiri Younes')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>M123458</td>
+                        <td>QB123458</td>
+                        <td>Tazi</td>
+                        <td>Ahmed</td>
+                        <td>Medical</td>
+                        <td>CS Khouribga</td>
+                        <td>Khouribga</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=38" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=38" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(38, 'Tazi Ahmed')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>P123460</td>
+                        <td>QB234571</td>
+                        <td>Ziani</td>
+                        <td>Fatima</td>
+                        <td>Paramedical</td>
+                        <td>Hôpital Régional</td>
+                        <td>Béni Mellal</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="index.php?action=view&id=45" 
+                                   class="btn btn-sm btn-info" title="Voir">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="index.php?action=update&id=45" 
+                                   class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <button onclick="confirmDelete(45, 'Ziani Fatima')" 
+                                        class="btn btn-sm btn-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                                                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
