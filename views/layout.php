@@ -2,8 +2,20 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#0d6efd">
+    <meta name="description" content="Système d'Information des Ressources Humaines - Direction Régionale de la Santé Béni Mellal-Khénifra">
     <title>SIRH - Direction Régionale de la Santé</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <link rel="apple-touch-icon" href="assets/img/logo.png">
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
@@ -12,8 +24,34 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="assets/css/style.css" rel="stylesheet">
+    
+    <!-- Loading indicator style -->
+    <style>
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        .loading.active {
+            display: flex;
+        }
+    </style>
 </head>
 <body>
+    <!-- Loading Indicator -->
+    <div class="loading">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Chargement...</span>
+        </div>
+    </div>
+
     <?php
     // Check if this is the login page
     $isLoginPage = isset($_GET['controller']) && $_GET['controller'] === 'user' && $_GET['action'] === 'login';
@@ -22,6 +60,12 @@
     if (!isset($_SESSION['user']) && !$isLoginPage) {
         header('Location: index.php?controller=user&action=login');
         exit;
+    }
+
+    // Handle flash messages
+    if (isset($_SESSION['flash'])) {
+        $flashMessage = $_SESSION['flash'];
+        unset($_SESSION['flash']);
     }
     ?>
     <!-- Top Navigation -->

@@ -1,12 +1,6 @@
 <?php require_once 'views/layout.php'; ?>
 <!-- Main Content -->
 <main class="app-main">
-    <div class="page-header">
-        <div class="page-title">
-            <h1>Liste des Congés</h1>
-        </div>
-    </div>
-
     <div class="page-content">
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">

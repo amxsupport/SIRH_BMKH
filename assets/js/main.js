@@ -1,6 +1,17 @@
 // Modern SIRH Application JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Loading Indicator Management
+    const loadingIndicator = document.querySelector('.loading');
+    
+    function showLoading() {
+        loadingIndicator.classList.add('active');
+    }
+    
+    function hideLoading() {
+        loadingIndicator.classList.remove('active');
+    }
+
     // Theme Management
     const themeToggle = document.querySelector('.theme-toggle');
     if (themeToggle) {
@@ -17,25 +28,114 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Mobile Navigation Toggle
+    // Mobile Navigation Toggle with improved touch handling
     const navToggle = document.querySelector('.nav-toggle');
     const sidebar = document.querySelector('.app-sidebar');
     if (navToggle && sidebar) {
-        navToggle.addEventListener('click', () => {
+        navToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
             sidebar.classList.toggle('show');
             document.body.classList.toggle('sidebar-open');
         });
 
         // Close sidebar when clicking outside
         document.addEventListener('click', (e) => {
-            if (window.innerWidth < 992) {
-                if (!sidebar.contains(e.target) && !navToggle.contains(e.target)) {
-                    sidebar.classList.remove('show');
-                    document.body.classList.remove('sidebar-open');
-                }
+            if (window.innerWidth < 992 && 
+                sidebar.classList.contains('show') && 
+                !sidebar.contains(e.target) && 
+                !navToggle.contains(e.target)) {
+                sidebar.classList.remove('show');
+                document.body.classList.remove('sidebar-open');
             }
         });
+
+        // Handle touch events for better mobile experience
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        }, false);
+
+        document.addEventListener('touchmove', (e) => {
+            if (!touchStartX) return;
+
+            const touchEndX = e.touches[0].clientX;
+            const diff = touchStartX - touchEndX;
+
+            // Swipe left to close sidebar
+            if (diff > 50 && sidebar.classList.contains('show')) {
+                sidebar.classList.remove('show');
+                document.body.classList.remove('sidebar-open');
+            }
+            // Swipe right to open sidebar
+            else if (diff < -50 && !sidebar.classList.contains('show')) {
+                sidebar.classList.add('show');
+                document.body.classList.add('sidebar-open');
+            }
+        }, false);
+
+        document.addEventListener('touchend', () => {
+            touchStartX = 0;
+        }, false);
     }
+
+    // AJAX Form Submissions
+    document.querySelectorAll('form[data-ajax="true"]').forEach(form => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading();
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: formData
+                });
+
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                const result = await response.json();
+                if (result.success) {
+                    if (result.redirect) {
+                        window.location.href = result.redirect;
+                    } else {
+                        // Show success message
+                        showAlert('success', result.message);
+                    }
+                } else {
+                    showAlert('danger', result.message || 'Une erreur est survenue');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('danger', 'Une erreur est survenue lors de la soumission du formulaire');
+            } finally {
+                hideLoading();
+            }
+        });
+    });
+
+    // Alert Management
+    function showAlert(type, message) {
+        const alertHTML = `
+            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                <div class="alert-content">
+                    <i class="bi bi-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i>
+                    <span>${message}</span>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        `;
+        const alertContainer = document.createElement('div');
+        alertContainer.innerHTML = alertHTML;
+        document.querySelector('.page-content').insertAdjacentElement('afterbegin', alertContainer.firstChild);
+    }
+
+    // Auto-dismiss alerts after 5 seconds
+    document.querySelectorAll('.alert').forEach(alert => {
+        setTimeout(() => {
+            const closeButton = alert.querySelector('.btn-close');
+            if (closeButton) closeButton.click();
+        }, 5000);
+    });
 
     // Fullscreen Toggle
     const fullscreenBtn = document.querySelector('.btn-fullscreen');
@@ -273,20 +373,6 @@ function generateChartOptions(config) {
             }
         }
     };
-}
-
-// Loading Indicators
-function showLoading() {
-    const loading = document.createElement('div');
-    loading.className = 'loading';
-    document.body.appendChild(loading);
-}
-
-function hideLoading() {
-    const loading = document.querySelector('.loading');
-    if (loading) {
-        loading.remove();
-    }
 }
 
 // Excel Export
